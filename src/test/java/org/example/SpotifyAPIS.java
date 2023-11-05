@@ -12,50 +12,37 @@ import org.testng.annotations.Test;
 
 public class SpotifyAPIS {
 
-    /*Get Album*/
+public static RequestSpecification requestSpecification;
+public static ResponseSpecification responseSpecification;
 
-    public static RequestSpecification requestSpecification;
-    public static ResponseSpecification responseSpecification;
+@Test
+public void getPlayList(){
 
-    @Test
-    public void getAlbum(){
+    requestSpecification = new RequestSpecBuilder().setBaseUri("https://api.spotify.com")
+            .setBasePath("/v1")
+            .addHeader("Authorization","Bearer BQDKvBe9vztO5JrBJEmLpoQb-hHIDK348UKd4NN1C98CBQ2zSiBv7nxiSSa_iGEASb3RONFMXy7TddbYTcDXU96arcEB83-h6uG9qbwGQFhhcd4qOHWqgZYAtMFbq7L0wlgPeHgD3NL4eRR7EJaREJAQKfo-BdZJnnY3rXcT_OGfAezqKgHTBqKhK5wCr2xR2QQDy9PGRwLHhzlUTiS5GEJClnGttMZ8k9R-6mMYtAVvRm1aH6sevIXMcRaBji30qTZ04ZyWS-Clzhnbyg")
+            .setContentType(ContentType.JSON).log(LogDetail.ALL).build();
 
-/*        RequestSpecification */
+    responseSpecification = new ResponseSpecBuilder().expectStatusCode(200)
+            .expectContentType(ContentType.JSON).log(LogDetail.ALL).build();
 
-        requestSpecification = new RequestSpecBuilder().setBaseUri("https://api.spotify.com")
-                .setBasePath("/v1")
-                .addHeader("Authorization","Bearer BQDy8dJY1micVJBWl4kjnR1i7YAVb3-A-fhdw30J-igidH8ZRrNxHfLic0m84ILNVC6cXDwOBGm60mO8E2eEFR-wE8hCnR3LeP6GvQEFGWKiqmLgyUg69rfKhYWxGaRc4D0AtoNbfEr4mE5C75fHejHFh7XqjjHG1P15SkOgKhspKvlvpz2wulEZ_3ILGIcNgMFCGzcvSIvHBNiS_MwJ7Fy6GW1_WCLiDi_gTsYgWxv2jfKNX8YVRcH_oEzWTd-1RiIMpaybFUyxl9weQw")
-                .setContentType(ContentType.JSON)
-                .log(LogDetail.ALL)
-                .build();
-/*        ResponseSpecification*/
+    given().spec(requestSpecification).when().get("/playlists/3cEYpjA9oz9GiPac4AsH4n")
+            .then().spec(responseSpecification).extract().response().asString();
+}
+@Test
+public void getPlayListItems(){
+    requestSpecification = new RequestSpecBuilder().setBaseUri("https://api.spotify.com")
+            .setBasePath("/v1")
+            .addHeader("Authorization","Bearer BQDKvBe9vztO5JrBJEmLpoQb-hHIDK348UKd4NN1C98CBQ2zSiBv7nxiSSa_iGEASb3RONFMXy7TddbYTcDXU96arcEB83-h6uG9qbwGQFhhcd4qOHWqgZYAtMFbq7L0wlgPeHgD3NL4eRR7EJaREJAQKfo-BdZJnnY3rXcT_OGfAezqKgHTBqKhK5wCr2xR2QQDy9PGRwLHhzlUTiS5GEJClnGttMZ8k9R-6mMYtAVvRm1aH6sevIXMcRaBji30qTZ04ZyWS-Clzhnbyg")
+            .setContentType(ContentType.JSON).log(LogDetail.ALL).build();
 
-        responseSpecification = new ResponseSpecBuilder().expectStatusCode(200).log(LogDetail.ALL).build();
+    responseSpecification = new ResponseSpecBuilder().expectStatusCode(200)
+            .expectContentType(ContentType.JSON).log(LogDetail.ALL).build();
 
-        /*Main Code*/
+    given().spec(requestSpecification).when().get("/playlists/3cEYpjA9oz9GiPac4AsH4n/tracks")
+            .then().spec(responseSpecification).extract().response().asString();
 
-        given().spec(requestSpecification).when().get("/albums/4aawyAB9vmqN3uQ7FjRGTy")
-                .then().spec(responseSpecification).extract().asString();
-    }
+}
 
-    /*Get Album Track*/
 
-    @Test
-    public  void getAlbumTrack(){
-        /*        RequestSpecification */
-
-        requestSpecification = new RequestSpecBuilder().setBaseUri("https://api.spotify.com")
-                .setBasePath("/v1")
-                .addHeader("Authorization","Bearer BQDy8dJY1micVJBWl4kjnR1i7YAVb3-A-fhdw30J-igidH8ZRrNxHfLic0m84ILNVC6cXDwOBGm60mO8E2eEFR-wE8hCnR3LeP6GvQEFGWKiqmLgyUg69rfKhYWxGaRc4D0AtoNbfEr4mE5C75fHejHFh7XqjjHG1P15SkOgKhspKvlvpz2wulEZ_3ILGIcNgMFCGzcvSIvHBNiS_MwJ7Fy6GW1_WCLiDi_gTsYgWxv2jfKNX8YVRcH_oEzWTd-1RiIMpaybFUyxl9weQw")
-                .setContentType(ContentType.JSON)
-                .log(LogDetail.ALL)
-                .build();
-        /*        ResponseSpecification*/
-
-        responseSpecification = new ResponseSpecBuilder().expectStatusCode(200).log(LogDetail.ALL).build();
-
-        /*Main Code*/
-        given().spec(requestSpecification).when().get("/albums/4aawyAB9vmqN3uQ7FjRGTy/tracks")
-                .then().spec(responseSpecification).extract().response().asString();
-    }
 }
